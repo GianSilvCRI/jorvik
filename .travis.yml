@@ -5,5 +5,10 @@ services:
 before_install:
   - docker-compose build
 
+  - # Let's stop postgresql
+  - sudo service postgresql stop
+  # wait for postgresql to shutdown
+  - while sudo lsof -Pi :5432 -sTCP:LISTEN -t; do sleep 1; done
+
 script:
 - docker-compose run -e SKIP_DJANGO_MIGRATE=1 -e GOOGLE_KEY=$GOOGLE_KEY web python manage.py test -k -v 3
