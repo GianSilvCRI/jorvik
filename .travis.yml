@@ -14,5 +14,13 @@ before_install:
   # wait for postgresql to shutdown
   - while sudo lsof -Pi :5432 -sTCP:LISTEN -t; do sleep 1; done
 
+  - wget http://download.osgeo.org/geos/geos-3.4.2.tar.bz2
+  - tar xjf geos-3.4.2.tar.bz2
+  - cd geos-3.4.2
+  - ./configure
+  - make
+  - sudo make install
+  - cd ..
+
 script:
 - docker-compose run -e SKIP_DJANGO_MIGRATE=1 -e GOOGLE_KEY=$GOOGLE_KEY web python manage.py test -k -v 3
