@@ -7,6 +7,7 @@ before_install:
   - sudo service postgresql stop
   # wait for postgresql to shutdown
   - while sudo lsof -Pi :5432 -sTCP:LISTEN -t; do sleep 1; done
+  - sudo apt-get install -y binutils libproj-dev gdal-bin
   - curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-Linux-x86_64 > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
